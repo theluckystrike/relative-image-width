@@ -1,5 +1,6 @@
 {
 	"name": "relative-image-width",
+	"repository": {"type": "git", "url": "theluckystrike/relative-image-width.git"},
 	"version": "1.0.0",
 	"private": true,
 	"description": "Sizes embedded images with percent, em, rem and viewport units in Reading view and Live Preview.",
