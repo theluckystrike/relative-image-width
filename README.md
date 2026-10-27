@@ -66,7 +66,7 @@ The plugin reads `width`, `height`, one `#id` and `.class` names. A bare number 
 
 ### Default size for a note (Pro)
 
-With Pro, you can give every image that has no size in its link a default size, for example `100%` or `40rem`. The note property `image-width` sets the default for one note and wins over the setting. A size in the link wins over both.
+With Pro, you can give every image that has no size in its link a default size, for example `100%` or `40rem`. The note property `image-width` sets the default for one note and wins over the setting. A size in the link wins over both. Without Pro, a change of the setting, or the property in the open note, shows a Sponsor on GitHub notice. The images keep their size.
 
 <img src="https://raw.githubusercontent.com/theluckystrike/relative-image-width/HEAD/docs/default-size.png" alt="Reading view of a note with the property image-width set to 40 percent: the image without a size shows at 40 percent of the column" width="720">
 

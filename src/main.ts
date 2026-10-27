@@ -2,7 +2,7 @@ import { MarkdownView, Plugin, TFile, debounce } from 'obsidian';
 import type { SponsorsManager } from './license/index';
 import { createGitHubSponsors } from './license/github-obsidian';
 import { setupHello } from './hello/index';
-import { SPONSORS, bindPro, isPro, onProChange, resetPro } from './pro';
+import { PROPERTY_LEAD, SPONSORS, bindPro, isPro, onProChange, proNotice, resetPro } from './pro';
 import { DEFAULT_SETTINGS, NOTE_PROPERTY, RelativeImageWidthSettingTab, effectiveOptions, normalizeSettings, type Options, type RelativeImageWidthSettings } from './settings';
 import { readingProcessor } from './reading';
 import { clearTracked } from './dom';
@@ -48,11 +48,7 @@ export default class RelativeImageWidthPlugin extends Plugin {
 		);
 		// Pro: a change of the note property sizes the images of that note again.
 		this.registerEvent(
-			this.app.metadataCache.on('changed', (file, _data, cache) => {
-				if (!this.propertyChanged(file, cache.frontmatter) || !isPro()) return;
-				redrawViews();
-				this.rerenderReading(file.path);
-			}),
+			this.app.metadataCache.on('changed', (file, _data, cache) => this.onMetadataChanged(file, cache.frontmatter)),
 		);
 
 		this.app.workspace.onLayoutReady(() => {
@@ -86,6 +82,22 @@ export default class RelativeImageWidthPlugin extends Plugin {
 	}
 
 	private lastProperty = new Map<string, string>();
+	private propertyNoticeShown = false;
+
+	/** Pro: a change of the note property sizes the images of that note again. A free user who sets the property in
+	 * the open note gets the Pro notice, once in each session. */
+	onMetadataChanged(file: TFile, fm: Record<string, unknown> | undefined): void {
+		if (!this.propertyChanged(file, fm)) return;
+		if (!isPro()) {
+			if (!this.propertyNoticeShown && fm?.[NOTE_PROPERTY] != null && this.app.workspace.getActiveFile()?.path === file.path) {
+				this.propertyNoticeShown = true;
+				proNotice(PROPERTY_LEAD);
+			}
+			return;
+		}
+		redrawViews();
+		this.rerenderReading(file.path);
+	}
 
 	/** True when the note property of this note changed since the last check. */
 	private propertyChanged(file: TFile, fm: Record<string, unknown> | undefined): boolean {

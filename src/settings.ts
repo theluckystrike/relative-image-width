@@ -1,7 +1,7 @@
 import { PluginSettingTab, type SettingDefinitionItem } from 'obsidian';
 import { sponsorsSettingItems } from './license/github-obsidian';
 import { helloSettingItems } from './hello/settings';
-import { PRO_UI, isPro } from './pro';
+import { PRO_UI, SIZE_LEAD, isPro, proNotice } from './pro';
 import { defaultSize, type CssSize } from './size';
 import type RelativeImageWidthPlugin from './main';
 
@@ -67,7 +67,7 @@ export class RelativeImageWidthSettingTab extends PluginSettingTab {
 			{
 				name: 'Default image size',
 				desc: `Pro. The size of every embedded image that has no size in its link, for example 100% or 40rem. Leave it empty to keep the natural size. The note property ${NOTE_PROPERTY} sets this size for one note.`,
-				control: { type: 'text', key: 'defaultSize', defaultValue: DEFAULT_SETTINGS.defaultSize, placeholder: '100%', disabled: () => !isPro() },
+				control: { type: 'text', key: 'defaultSize', defaultValue: DEFAULT_SETTINGS.defaultSize, placeholder: '100%' },
 			},
 			{
 				name: 'Pro features',
@@ -79,7 +79,22 @@ export class RelativeImageWidthSettingTab extends PluginSettingTab {
 		];
 	}
 
+	getControlValue(key: string): unknown {
+		// A free user sees the value in effect: no default size. The stored size stays for the time that Pro comes back.
+		if (key === 'defaultSize' && !isPro()) return '';
+		return super.getControlValue(key);
+	}
+
 	async setControlValue(key: string, value: unknown): Promise<void> {
+		if (key === 'defaultSize' && !isPro()) {
+			// Free users can select the Pro row: the notice shows what Pro adds and how to get it. Nothing is saved.
+			proNotice(SIZE_LEAD);
+			// Obsidian does not draw a control again while it has the focus. Move the focus out, then draw the tab again.
+			const active = this.containerEl.ownerDocument.activeElement as HTMLElement | null;
+			if (active && this.containerEl.contains(active)) active.blur();
+			this.update();
+			return;
+		}
 		await super.setControlValue(key, value);
 		this.plugin.settings = normalizeSettings(this.plugin.settings);
 		await this.plugin.saveSettings();
