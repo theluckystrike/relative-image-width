@@ -31,7 +31,7 @@ The Markdown image form takes the size after the alt text:
 
 A number is from more than 0 to 10000, with or without decimals. A size wider than the text column stops at the column, as a natural image does. You can mix units: `50%x120` is half the column wide and 120 pixels high.
 
-Free: all of the forms above in Live Preview and Reading view, and the Pandoc attributes. Pro: a default size for images without a size, and a note property. $15 one time or $5 a month: [Sponsor](https://github.com/sponsors/theluckystrike?metadata_source=relative-image-width).
+Free: all of the forms above in Live Preview and Reading view, and the Pandoc attributes. Pro: a default size for images without a size, and a note property. $15 one time or $5 a month: [Sponsor](https://github.com/sponsors/theluckystrike?frequency=one-time&metadata_source=relative-image-width).
 
 ### What Obsidian does without it
 
@@ -104,7 +104,7 @@ After a minor or major update, this plugin opens one What's new tab in the backg
 
 To sign in and enable Pro:
 
-1. Sponsor via [GitHub Sponsors](https://github.com/sponsors/theluckystrike?metadata_source=relative-image-width). A total payment of $15 meets the payment requirement for Pro without further payment. Sign-in and the checks below still apply.
+1. Sponsor via [GitHub Sponsors](https://github.com/sponsors/theluckystrike?frequency=one-time&metadata_source=relative-image-width). A total payment of $15 meets the payment requirement for Pro without further payment. Sign-in and the checks below still apply.
 2. In Obsidian, open the settings of Relative Image Width and select "Sign in with GitHub".
 3. The plugin copies a code and opens github.com/login/device. Paste the code there and approve.
 
@@ -132,7 +132,7 @@ No. Publish does not run community plugins.
 
 The core features are free. Pro features need a GitHub Sponsors sponsorship of theluckystrike: $5 a month or more, or $15 once. A total payment of $15 meets the payment requirement for Pro without further payment. Sign-in and the checks below still apply. Your notes stay readable and editable with or without Pro.
 
-GitHub handles the payment. Sponsor at https://github.com/sponsors/theluckystrike. You need no account for the free features. Pro needs the GitHub account that sponsors.
+GitHub handles the payment. Sponsor at https://github.com/sponsors/theluckystrike?frequency=one-time&metadata_source=relative-image-width. You need no account for the free features. Pro needs the GitHub account that sponsors.
 
 Until you select "Sign in with GitHub" in the settings, Relative Image Width makes no network requests. Sign in uses the GitHub device flow. Relative Image Width sends its public client ID and the scope `read:user` to `https://github.com/login/device/code` and shows you a code. While you enter the code at https://github.com/login/device, it asks `https://github.com/login/oauth/access_token` every few seconds to check the sign-in status. The scope permits profile reads only. GitHub needs this access to show the sponsorship tier. It grants no repository scope and no write access.
 
