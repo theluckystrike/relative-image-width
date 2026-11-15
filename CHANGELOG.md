@@ -1,5 +1,11 @@
 # relative-image-width
 
+## 1.0.3
+
+### Patch Changes
+
+- The Sponsor button now opens the NoteMods one-time tier.
+
 ## 1.0.2
 
 ### Patch Changes

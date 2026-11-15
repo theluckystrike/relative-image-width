@@ -128,7 +128,7 @@ export function clearImage(img: HTMLImageElement): void {
 /** Puts back the Pandoc text that Reading view hid. */
 export function restoreHidden(root: ParentNode): void {
 	for (const el of Array.from(root.querySelectorAll<HTMLElement>(`[${HIDDEN}]`))) {
-		el.replaceWith(document.createTextNode(el.getAttribute(HIDDEN) ?? ''));
+		el.replaceWith(el.doc.createTextNode(el.getAttribute(HIDDEN) ?? ''));
 	}
 }
 
@@ -164,7 +164,7 @@ function readingPandoc(img: HTMLImageElement): CssSize | null {
 	const el = holder(img);
 	// A second pass: the block is already hidden. Read it from the hidden span.
 	const after = el.nextSibling;
-	if (after instanceof HTMLElement && after.hasAttribute(HIDDEN)) {
+	if (after?.instanceOf(HTMLElement) && after.hasAttribute(HIDDEN)) {
 		const again = parsePandocAttrs(after.getAttribute(HIDDEN) ?? '');
 		return again && (again.width || again.height) ? { width: again.width, height: again.height } : null;
 	}
